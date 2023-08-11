@@ -1,13 +1,16 @@
-import { createServer } from 'node:http'
-import { createYoga, createSchema } from 'graphql-yoga'
-import numberName from 'number-name';
+/* eslint-disable no-eval */
+import { createServer } from "node:http";
+
+import { createSchema, createYoga } from "graphql-yoga";
+import numberName from "number-name";
 
 const maxNumber = 10000;
 
+// eslint-disable-next-line no-extend-native
 String.prototype.toCamelCase = function () {
   return this
-    .replace(/-([a-z]{1})/, function(v) { return v.toUpperCase().replaceAll('-', ''); })
-    .replace(/ ([a-z]{1})/gm, function(v) { return v.toUpperCase().replaceAll(' ', ''); });
+    .replace(/-([a-z]{1})/, function (v) { return v.toUpperCase().replaceAll("-", ""); })
+    .replace(/ ([a-z]{1})/gm, function (v) { return v.toUpperCase().replaceAll(" ", ""); });
 };
 
 const schema = createSchema({
@@ -24,8 +27,8 @@ const schema = createSchema({
     }
     type ResultValue {
       ${
-        Array(maxNumber).fill(0).map((_, index) => `${numberName(index + 1).toCamelCase()}: ResultOperand`).join('\n')
-      }
+  Array(maxNumber).fill(0).map((_, index) => `${numberName(index + 1).toCamelCase()}: ResultOperand`).join("\n")
+}
     }
   `,
   resolvers: {
@@ -33,22 +36,22 @@ const schema = createSchema({
       calculate: () => [],
     },
     ResultOperand: {
-      result: (parent) => eval(parent.join('').replace(/[^-()\d/*+.]/g, '')),
-      plus: (parent) => { parent.push("+"); return parent },
-      minus: (parent) => { parent.push("-"); return parent },
-      multiply: (parent) => { parent.push("*"); return parent },
-      divide: (parent) => { parent.push("/"); return parent },
+      result: (parent) => eval(parent.join("").replace(/[^-()\d/*+.]/g, "")),
+      plus: (parent) => { parent.push("+"); return parent; },
+      minus: (parent) => { parent.push("-"); return parent; },
+      multiply: (parent) => { parent.push("*"); return parent; },
+      divide: (parent) => { parent.push("/"); return parent; },
     },
     ResultValue: Array(maxNumber)
       .fill(0)
       .map((_, index) => index + 1)
       .reduce((acc, cur) => {
-        acc[numberName(cur).toCamelCase()] = (parent) => { parent.push(cur); return parent };
+        acc[numberName(cur).toCamelCase()] = (parent) => { parent.push(cur); return parent; };
         return acc;
       }, {}),
-  }
-})
+  },
+});
 
 createServer(createYoga({ schema })).listen(4000, () => {
- console.info('Server is running on http://localhost:4000/graphql')
+  console.info("Server is running on http://localhost:4000/graphql");
 });

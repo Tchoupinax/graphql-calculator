@@ -1,15 +1,17 @@
 {
   "name": "graphql-calculator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "start": "node src/index.js"
   },
   "dependencies": {
-    "graphql": "^16.6.0",
-    "graphql-yoga": "^3.1.1",
-    "number-name": "^0.1.5"
+    "graphql": "16.7.1",
+    "graphql-yoga": "4.0.4",
+    "number-name": "0.1.5"
+  },
+  "devDependencies": {
+    "eslint-config-tchoupinax": "^1.0.3"
   }
 }
