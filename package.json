@@ -7,11 +7,11 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "graphql": "16.7.1",
-    "graphql-yoga": "4.0.4",
+    "graphql": "16.12.0",
+    "graphql-yoga": "5.18.0",
     "number-name": "0.1.5"
   },
   "devDependencies": {
-    "eslint-config-tchoupinax": "^1.0.3"
+    "eslint-config-tchoupinax": "1.1.0"
   }
 }
